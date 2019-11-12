@@ -244,8 +244,9 @@ test_expect_success 'save -q is quiet' '
 	test_must_be_empty output.out
 '
 
-test_expect_success 'pop -q is quiet' '
+test_expect_success 'pop -q works and is quiet' '
 	git stash pop -q >output.out 2>&1 &&
+	test bar = "$(git show :file)" &&
 	test_must_be_empty output.out
 '
 
@@ -254,6 +255,8 @@ test_expect_success 'pop -q --index works and is quiet' '
 	git add file &&
 	git stash save --quiet &&
 	git stash pop -q --index >output.out 2>&1 &&
+	git diff-files file2 >file2.diff &&
+	test_must_be_empty file2.diff &&
 	test foo = "$(git show :file)" &&
 	test_must_be_empty output.out
 '
