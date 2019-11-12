@@ -31,7 +31,8 @@ test_expect_success 'log --graph with merge fusing with its left and right neigh
 	git checkout _p && git merge --no-ff _r -m G &&
 	git checkout @^^ && git merge --no-ff _p -m H &&
 
-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+	git log --graph --pretty=tformat:%s >actual.raw &&
+	sed "s/ *$//" actual.raw >actual &&
 	test_cmp expect actual
 '
 
@@ -68,7 +69,8 @@ test_expect_success 'log --graph with left-skewed merge' '
 	git checkout 0_p && git merge --no-ff 0_s -m 0_G &&
 	git checkout @^ && git merge --no-ff 0_q 0_r 0_t 0_p -m 0_H &&
 
-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+	git log --graph --pretty=tformat:%s >actual.raw &&
+	sed "s/ *$//" actual.raw >actual &&
 	test_cmp expect actual
 '
 
@@ -99,7 +101,8 @@ test_expect_success 'log --graph with nested left-skewed merge' '
 	git checkout 1_p && git merge --no-ff 1_r -m 1_G &&
 	git checkout @^^ && git merge --no-ff 1_p -m 1_H &&
 
-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+	git log --graph --pretty=tformat:%s >actual.raw &&
+	sed "s/ *$//" actual.raw >actual &&
 	test_cmp expect actual
 '
 
@@ -139,7 +142,8 @@ test_expect_success 'log --graph with nested left-skewed merge following normal 
 	git checkout -b 2_s @^^ && git merge --no-ff 2_q -m 2_J &&
 	git checkout 2_p && git merge --no-ff 2_s -m 2_K &&
 
-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+	git log --graph --pretty=tformat:%s >actual.raw &&
+	sed "s/ *$//" actual.raw >actual &&
 	test_cmp expect actual
 '
 
@@ -175,7 +179,8 @@ test_expect_success 'log --graph with nested right-skewed merge following left-s
 	git checkout 3_p && git merge --no-ff 3_r -m 3_H &&
 	git checkout @^^ && git merge --no-ff 3_p -m 3_J &&
 
-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+	git log --graph --pretty=tformat:%s >actual.raw &&
+	sed "s/ *$//" actual.raw >actual &&
 	test_cmp expect actual
 '
 
@@ -210,7 +215,8 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
 	git merge --no-ff 4_p -m 4_G &&
 	git checkout @^^ && git merge --no-ff 4_s -m 4_H &&
 
-	git log --graph --date-order --pretty=tformat:%s | sed "s/ *$//" >actual &&
+	git log --graph --date-order --pretty=tformat:%s >actual.raw &&
+	sed "s/ *$//" actual.raw >actual &&
 	test_cmp expect actual
 '
 
@@ -250,7 +256,8 @@ test_expect_success 'log --graph with octopus merge with column joining its penu
 	git checkout 5_r &&
 	git merge --no-ff 5_s -m 5_H &&
 
-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+	git log --graph --pretty=tformat:%s >actual.raw &&
+	sed "s/ *$//" actual.raw >actual &&
 	test_cmp expect actual
 '
 
